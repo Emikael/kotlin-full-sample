@@ -9,7 +9,7 @@ object UserSchema : Table("users") {
     val name = varchar("name", DEFAULT_VARCHAR_LENGTH)
     val email = varchar("email", DEFAULT_VARCHAR_LENGTH)
     val phone = varchar("phone", DEFAULT_VARCHAR_PHONE).nullable()
-    val addressId = long("addressid").references(AddressSchema.id)
+    val addressId = long("addressid").references(AddressSchema.id).nullable()
     val createdAt = datetime("created_at")
     val updatedAt = datetime("updated_at").nullable()
 }

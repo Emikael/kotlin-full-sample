@@ -8,6 +8,4 @@ data class ViaCepAddress(
     val city: String,
     val state: String,
     val ibge: String
-) {
-    // FIXME add funcition on data class AddressDTO
-}
+)

@@ -4,9 +4,13 @@ import io.github.emikaelsilveira.domain.entities.UserDTO
 
 interface UserRepository {
 
-    fun getAll(): UserDTO
+    fun getAll(): List<UserDTO>
 
     fun getOne(id: Long): UserDTO
 
-    fun create()
+    fun create(userDTO: UserDTO): UserDTO
+
+    fun update(id: Long, userDTO: UserDTO): UserDTO
+
+    fun delete(id: Long)
 }
