@@ -8,11 +8,11 @@ import org.joda.time.LocalDateTime
 class LocalDateTimeSerializer : StdSerializer<LocalDateTime>(LocalDateTime::class.java) {
 
     companion object {
-        private const val DATETIME_FORMATTER = "dd/MM/YYYY"
+        private const val DATETIME_FORMATTER = "dd/MM/YYYY HH:mm:ss"
     }
 
     override fun serialize(value: LocalDateTime?, gen: JsonGenerator?, provider: SerializerProvider?) {
-        gen?.writeString(value?.toLocalTime()?.toString(DATETIME_FORMATTER))
+        gen?.writeString(value?.toString(DATETIME_FORMATTER))
     }
 
 }

@@ -8,10 +8,11 @@ import io.github.emikaelsilveira.application.config.modules.routerModule
 import io.github.emikaelsilveira.application.config.modules.serviceModule
 import io.github.emikaelsilveira.application.web.routers.AddressRouter
 import io.github.emikaelsilveira.application.web.routers.UserRouter
-import io.github.emikaelsilveira.domain.exceptions.AddressNotFoundException
-import io.github.emikaelsilveira.domain.exceptions.UserNotFoundException
+import io.github.emikaelsilveira.domain.exceptions.NotFoundException
 import io.javalin.Javalin
 import io.javalin.plugin.json.JavalinJackson
+import org.eclipse.jetty.http.HttpStatus
+import org.eclipse.jetty.http.HttpStatus.INTERNAL_SERVER_ERROR_500
 import org.eclipse.jetty.http.HttpStatus.NOT_FOUND_404
 import org.koin.core.KoinComponent
 import org.koin.core.context.startKoin
@@ -20,6 +21,10 @@ import org.koin.core.inject
 
 class AppConfig : KoinComponent {
 
+    init {
+        setupDependencyInjection()
+    }
+
     companion object {
         private const val APPLICATION_PORT = 7000
     }
@@ -27,8 +32,7 @@ class AppConfig : KoinComponent {
     private val userRouter: UserRouter by inject()
     private val addressRouter: AddressRouter by inject()
 
-    fun init() {
-//        setupDependencyInjection()
+    fun setup() {
         startServer {
             stopKoin()
         }
@@ -56,16 +60,18 @@ class AppConfig : KoinComponent {
         }.events { event ->
             event.serverStopped(shutdown)
         }.also { app ->
-            userRouter.register(app)
-            addressRouter.register(app)
+            app.routes {
+                userRouter.register()
+                addressRouter.register()
+            }
 
-            app.exception(UserNotFoundException::class.java) { exception, ctx ->
+            app.exception(NotFoundException::class.java) { exception, ctx ->
                 ctx.status(NOT_FOUND_404)
                 exception.message?.let { ctx.result(it) }
             }
 
-            app.exception(AddressNotFoundException::class.java) { exception, ctx ->
-                ctx.status(NOT_FOUND_404)
+            app.exception(RuntimeException::class.java) { exception, ctx ->
+                ctx.status(INTERNAL_SERVER_ERROR_500)
                 exception.message?.let { ctx.result(it) }
             }
 

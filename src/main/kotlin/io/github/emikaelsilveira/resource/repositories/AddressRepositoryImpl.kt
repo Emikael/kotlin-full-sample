@@ -1,7 +1,7 @@
 package io.github.emikaelsilveira.resource.repositories
 
 import io.github.emikaelsilveira.domain.entities.AddressDTO
-import io.github.emikaelsilveira.domain.exceptions.AddressNotFoundException
+import io.github.emikaelsilveira.domain.exceptions.NotFoundException
 import io.github.emikaelsilveira.domain.repositories.AddressRepository
 import io.github.emikaelsilveira.resource.extensions.toAddressDomain
 import io.github.emikaelsilveira.resource.repositories.schemas.AddressSchema
@@ -24,7 +24,7 @@ class AddressRepositoryImpl(dataSource: DataSource) : AddressRepository {
 
     override fun getByCep(cep: String) = transaction {
         AddressSchema.select { AddressSchema.cep eq cep }.map { it.toAddressDomain() }.firstOrNull()
-            ?: throw AddressNotFoundException(cep)
+            ?: throw NotFoundException(cep)
     }
 
     override fun create(addressDTO: AddressDTO) = transaction {

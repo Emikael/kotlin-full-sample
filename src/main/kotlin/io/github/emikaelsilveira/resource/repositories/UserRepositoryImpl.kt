@@ -1,7 +1,7 @@
 package io.github.emikaelsilveira.resource.repositories
 
 import io.github.emikaelsilveira.domain.entities.UserDTO
-import io.github.emikaelsilveira.domain.exceptions.UserNotFoundException
+import io.github.emikaelsilveira.domain.exceptions.NotFoundException
 import io.github.emikaelsilveira.domain.repositories.UserRepository
 import io.github.emikaelsilveira.resource.extensions.toUserDomain
 import io.github.emikaelsilveira.resource.repositories.schemas.AddressSchema
@@ -26,12 +26,12 @@ class UserRepositoryImpl(dataSource: DataSource) : UserRepository {
     }
 
     override fun getAll() = transaction {
-        (UserSchema innerJoin AddressSchema).selectAll().map { it.toUserDomain() }
+        (UserSchema leftJoin AddressSchema).selectAll().map { it.toUserDomain() }
     }
 
     override fun getOne(id: Long) = transaction {
-        (UserSchema innerJoin AddressSchema).select { UserSchema.id eq id }.map { it.toUserDomain() }.firstOrNull()
-            ?: throw UserNotFoundException(id)
+        (UserSchema leftJoin AddressSchema).select { UserSchema.id eq id }.map { it.toUserDomain() }.firstOrNull()
+            ?: throw NotFoundException(id.toString())
     }
 
     override fun create(userDTO: UserDTO) = transaction {

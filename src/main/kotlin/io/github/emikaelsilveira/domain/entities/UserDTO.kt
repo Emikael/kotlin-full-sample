@@ -9,6 +9,6 @@ data class UserDTO(
     val email: String,
     val phone: String?,
     val addressDTO: AddressDTO?,
-    val createAt: LocalDateTime,
+    val createAt: LocalDateTime?,
     val updateAt: LocalDateTime?
 )

@@ -11,7 +11,7 @@ fun ResultRow.toUserDomain() = UserDTO(
     name = this[UserSchema.name],
     email = this[UserSchema.email],
     phone = this[UserSchema.phone],
-    addressDTO = this.toAddressDomain(),
+    addressDTO = this[UserSchema.addressId]?.let { this.toAddressDomain() },
     createAt = this[UserSchema.createdAt].toLocalDateTime(),
     updateAt = this[UserSchema.updatedAt]?.toLocalDateTime()
 )
