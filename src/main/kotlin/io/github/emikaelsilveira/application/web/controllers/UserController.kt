@@ -20,7 +20,7 @@ class UserController(private val service: UserService) {
     fun update() = Handler {
         val id = it.paramAsLong(USER_ID)
         val user = it.bodyAsClass(UserDTO::class.java)
-        this.service.update(id, user)
+        it.json(this.service.update(id, user))
     }
 
     fun delete() = Handler { it.json(this.service.delete(it.paramAsLong(USER_ID))) }

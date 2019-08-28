@@ -27,11 +27,11 @@ class UserRepositoryImpl(dataSource: DataSource) : UserRepository {
     }
 
     override fun getAll() = transaction {
-        (UserSchema leftJoin AddressSchema).selectAll().map { it.toUserDomain() }
+        (UserSchema innerJoin AddressSchema).selectAll().map { it.toUserDomain() }
     }
 
     override fun getOne(id: Long) = transaction {
-        (UserSchema leftJoin AddressSchema).select { UserSchema.id eq id }.map { it.toUserDomain() }.firstOrNull()
+        (UserSchema innerJoin AddressSchema).select { UserSchema.id eq id }.map { it.toUserDomain() }.firstOrNull()
             ?: throw NotFoundException(id.toString())
     }
 
@@ -48,7 +48,7 @@ class UserRepositoryImpl(dataSource: DataSource) : UserRepository {
             dtoToSchema(it, userDTO)
             it[updatedAt] = LocalDateTime.now().toDateTime()
         }.let {
-            UserSchema.select { UserSchema.id eq id }.map { it.toUserDomain() }.first()
+            (UserSchema innerJoin AddressSchema).select { UserSchema.id eq id }.map { it.toUserDomain() }.first()
         }
     }
 
