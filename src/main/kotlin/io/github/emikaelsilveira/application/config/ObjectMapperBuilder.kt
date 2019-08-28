@@ -1,6 +1,7 @@
 package io.github.emikaelsilveira.application.config
 
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.SNAKE_CASE
 import com.fasterxml.jackson.databind.module.SimpleModule
@@ -26,6 +27,9 @@ object ObjectMapperBuilder {
 fun ObjectMapper.useSnakeCase(): ObjectMapper = this.setPropertyNamingStrategy(SNAKE_CASE)
 
 fun ObjectMapper.includeNonNull(): ObjectMapper = this.setSerializationInclusion(JsonInclude.Include.NON_NULL)
+
+fun ObjectMapper.ignoreUnknownProperties(): ObjectMapper =
+    this.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
 val objectMapper = ObjectMapperBuilder
     .configJsonMapper()

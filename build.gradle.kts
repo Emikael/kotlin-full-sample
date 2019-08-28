@@ -47,6 +47,7 @@ dependencies {
     implementation("com.zaxxer:HikariCP:3.3.1")
     implementation("org.slf4j:slf4j-simple:1.7.28")
     implementation("org.postgresql:postgresql:42.2.5")
+    implementation("com.github.kittinunf.fuel:fuel:2.2.0")
 }
 
 tasks.withType<KotlinCompile> {

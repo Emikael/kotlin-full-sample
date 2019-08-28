@@ -9,5 +9,5 @@ import org.koin.dsl.module
 
 val serviceModule: Module = module {
     single { UserServiceImpl(get()) as UserService }
-    single { AddressServiceImpl(get()) as AddressService }
+    single { AddressServiceImpl(get(), get()) as AddressService }
 }

@@ -1,14 +1,25 @@
 package io.github.emikaelsilveira.domain.services.implementations
 
 import io.github.emikaelsilveira.domain.entities.AddressDTO
+import io.github.emikaelsilveira.domain.exceptions.NotFoundException
+import io.github.emikaelsilveira.domain.providers.AddressProvider
 import io.github.emikaelsilveira.domain.repositories.AddressRepository
 import io.github.emikaelsilveira.domain.services.AddressService
 
-class AddressServiceImpl(private val repository: AddressRepository) : AddressService {
+class AddressServiceImpl(
+    private val addressProvider: AddressProvider,
+    private val repository: AddressRepository
+) : AddressService {
 
-    override fun getByCep(cep: String) = this.repository.getByCep(cep)
+    override fun getByCep(cep: String) = this.addressProvider.getAddress(cep).toDomain().let { createOrUpdate(it) }
 
-    override fun create(addressDTO: AddressDTO) = this.repository.create(addressDTO)
+    override fun createOrUpdate(addressDTO: AddressDTO): AddressDTO {
+        return when (val address = this.repository.getByCep(addressDTO.cep)) {
+            null -> this.repository.create(addressDTO)
+            else -> address.id?.let { this.repository.update(it, addressDTO) } ?: throw NotFoundException(address.cep)
+        }
+    }
 
-    override fun update(id: Long, addressDTO: AddressDTO) = this.repository.update(id, addressDTO)
+    override fun getAll() = this.repository.getAll()
+
 }

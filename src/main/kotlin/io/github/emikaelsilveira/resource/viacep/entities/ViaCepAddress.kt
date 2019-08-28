@@ -1,11 +1,36 @@
 package io.github.emikaelsilveira.resource.viacep.entities
 
+import com.fasterxml.jackson.annotation.JsonProperty
+import io.github.emikaelsilveira.domain.entities.AddressConvertable
+import io.github.emikaelsilveira.domain.entities.AddressDTO
+
 data class ViaCepAddress(
+    @get:JsonProperty("cep")
     val cep: String,
+    @get:JsonProperty("logradouro")
     val street: String,
+    @get:JsonProperty("complemento")
     val complement: String,
+    @get:JsonProperty("bairro")
     val neighborhood: String,
+    @get:JsonProperty("localidade")
     val city: String,
+    @get:JsonProperty("uf")
     val state: String,
-    val ibge: String
-)
+    @get:JsonProperty("ibge")
+    val ibge: Long
+) : AddressConvertable {
+
+    override fun toDomain() = AddressDTO(
+        id = null,
+        cep = this.cep,
+        street = this.street,
+        complement = this.complement,
+        neighborhood = this.neighborhood,
+        city = this.city,
+        state = this.state,
+        ibge = this.ibge,
+        createAt = null,
+        updateAt = null
+    )
+}

@@ -3,7 +3,6 @@ package io.github.emikaelsilveira.application.web.routers
 import io.github.emikaelsilveira.application.web.controllers.AddressController
 import io.javalin.apibuilder.ApiBuilder.get
 import io.javalin.apibuilder.ApiBuilder.path
-import io.javalin.apibuilder.ApiBuilder.post
 
 class AddressRouter(private val controller: AddressController) {
 
@@ -14,10 +13,9 @@ class AddressRouter(private val controller: AddressController) {
 
     fun register() {
         path(PATH_ADDRESS) {
-            post(this.controller.create())
+            get(this.controller.getAll())
             path(PARAM_CEP) {
                 get(this.controller.getByCep())
-                post(this.controller.update())
             }
         }
     }

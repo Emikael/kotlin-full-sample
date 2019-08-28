@@ -14,5 +14,4 @@ class LocalDateTimeSerializer : StdSerializer<LocalDateTime>(LocalDateTime::clas
     override fun serialize(value: LocalDateTime?, gen: JsonGenerator?, provider: SerializerProvider?) {
         gen?.writeString(value?.toString(DATETIME_FORMATTER))
     }
-
 }

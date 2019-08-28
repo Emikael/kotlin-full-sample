@@ -6,7 +6,8 @@ interface AddressService {
 
     fun getByCep(cep: String): AddressDTO
 
-    fun create(addressDTO: AddressDTO): AddressDTO
+    fun createOrUpdate(addressDTO: AddressDTO): AddressDTO
 
-    fun update(id: Long, addressDTO: AddressDTO): AddressDTO
+    fun getAll(): List<AddressDTO>
+
 }
