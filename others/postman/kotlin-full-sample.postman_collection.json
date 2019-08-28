@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "380d67df-3582-4b56-9612-6ca941eff6bb",
+		"name": "kotlin-full-sample",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/users",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Emikael Silveira\",\n\t\"email\": \"emikael.silveira@gmail.com\",\n\t\"phone\": \"(99)9 9999-9999\"\n}"
+						},
+						"url": {
+							"raw": "localhost:7000/users",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Emikael Silveira\",\n    \"email\": \"emikael.silveira@kotlin.com\",\n    \"phone\": \"(88)3 3333-2222\",\n    \"address\": {\n        \"cep\": \"88708001\"\n    }\n}"
+						},
+						"url": {
+							"raw": "localhost:7000/users/1",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/users/1",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/users/2",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Address",
+			"item": [
+				{
+					"name": "Get all address",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/address/",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"address",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a address",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7000/address/91790072",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"address",
+								"91790072"
+							]
+						},
+						"description": "Get a address and create or update on database"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
