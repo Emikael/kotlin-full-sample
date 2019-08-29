@@ -23,6 +23,7 @@ repositories {
     jcenter()
     mavenCentral()
     maven(url = "https://kotlin.bintray.com/kotlinx")
+    maven(url = "https://dl.bintray.com/spekframework/spek-dev")
 }
 
 application {
@@ -48,6 +49,14 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:1.7.28")
     implementation("org.postgresql:postgresql:42.2.5")
     implementation("com.github.kittinunf.fuel:fuel:2.2.0")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.1")
+    testImplementation("io.mockk:mockk:1.9.3")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.1")
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
 
 tasks.withType<KotlinCompile> {
