@@ -40,7 +40,7 @@ class UserRepositoryImpl(dataSource: DataSource) : UserRepository {
             dtoToSchema(it, userDTO)
             it[createdAt] = LocalDateTime.now().toDateTime()
         } get UserSchema.id
-        userDTO.copy(id = userId)
+        (UserSchema innerJoin AddressSchema).select { UserSchema.id eq userId }.map { it.toUserDomain() }.first()
     }
 
     override fun update(id: Long, userDTO: UserDTO) = transaction {
