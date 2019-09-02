@@ -3,7 +3,7 @@ package io.github.emikaelsilveira.application.web.controllers
 import io.github.emikaelsilveira.domain.entities.UserDTO
 import io.github.emikaelsilveira.domain.services.UserService
 import io.github.emikaelsilveira.resource.extensions.paramAsLong
-import io.javalin.http.Handler
+import io.javalin.http.Context
 
 class UserController(private val service: UserService) {
 
@@ -11,17 +11,17 @@ class UserController(private val service: UserService) {
         private const val USER_ID = "id"
     }
 
-    fun getAll() = Handler { it.json(this.service.getAll()) }
+    fun getAll() = this.service.getAll()
 
-    fun getOne() = Handler { it.json(this.service.getOne(it.paramAsLong(USER_ID))) }
+    fun getOne(context: Context) = this.service.getOne(context.paramAsLong(USER_ID))
 
-    fun create() = Handler { it.json(this.service.create(it.bodyAsClass(UserDTO::class.java))) }
+    fun create(context: Context) = this.service.create(context.bodyAsClass(UserDTO::class.java))
 
-    fun update() = Handler {
-        val id = it.paramAsLong(USER_ID)
-        val user = it.bodyAsClass(UserDTO::class.java)
-        it.json(this.service.update(id, user))
+    fun update(context: Context) {
+        val id = context.paramAsLong(USER_ID)
+        val user = context.bodyAsClass(UserDTO::class.java)
+        this.service.update(id, user)
     }
 
-    fun delete() = Handler { it.json(this.service.delete(it.paramAsLong(USER_ID))) }
+    fun delete(context: Context) = this.service.delete(context.paramAsLong(USER_ID))
 }

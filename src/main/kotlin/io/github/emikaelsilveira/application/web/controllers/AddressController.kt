@@ -1,7 +1,7 @@
 package io.github.emikaelsilveira.application.web.controllers
 
 import io.github.emikaelsilveira.domain.services.AddressService
-import io.javalin.http.Handler
+import io.javalin.http.Context
 
 class AddressController(private val service: AddressService) {
 
@@ -9,7 +9,7 @@ class AddressController(private val service: AddressService) {
         private const val CEP_PARAM = "cep"
     }
 
-    fun getByCep() = Handler { it.json(this.service.getByCep(it.pathParam(CEP_PARAM))) }
+    fun getByCep(context: Context) = this.service.getByCep(context.pathParam(CEP_PARAM))
 
-    fun getAll() = Handler { it.json(this.service.getAll()) }
+    fun getAll() = this.service.getAll()
 }

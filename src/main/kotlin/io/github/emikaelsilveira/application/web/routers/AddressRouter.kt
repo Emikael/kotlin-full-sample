@@ -4,7 +4,10 @@ import io.github.emikaelsilveira.application.web.controllers.AddressController
 import io.javalin.apibuilder.ApiBuilder.get
 import io.javalin.apibuilder.ApiBuilder.path
 
-class AddressRouter(private val controller: AddressController) {
+class AddressRouter(
+    private val controller: AddressController,
+    private val handler: ControllerRouteHandler
+) {
 
     companion object {
         private const val PATH_ADDRESS = "address"
@@ -13,9 +16,9 @@ class AddressRouter(private val controller: AddressController) {
 
     fun register() {
         path(PATH_ADDRESS) {
-            get(this.controller.getAll())
+            get { this.handler.register(it, this.controller::getAll) }
             path(PARAM_CEP) {
-                get(this.controller.getByCep())
+                get { this.handler.register(it, this.controller::getByCep) }
             }
         }
     }
