@@ -17,10 +17,10 @@ class UserController(private val service: UserService) {
 
     fun create(context: Context) = this.service.create(context.bodyAsClass(UserDTO::class.java))
 
-    fun update(context: Context) {
+    fun update(context: Context): UserDTO {
         val id = context.paramAsLong(USER_ID)
         val user = context.bodyAsClass(UserDTO::class.java)
-        this.service.update(id, user)
+        return this.service.update(id, user)
     }
 
     fun delete(context: Context) = this.service.delete(context.paramAsLong(USER_ID))
