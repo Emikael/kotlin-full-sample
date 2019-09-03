@@ -1,16 +1,16 @@
-package io.github.emikaelsilveira.controllers
+package io.github.emikaelsilveira.application.web.controllers
 
-import io.github.emikaelsilveira.application.web.controllers.UserController
 import io.github.emikaelsilveira.domain.entities.UserDTO
 import io.github.emikaelsilveira.domain.services.UserService
 import io.github.emikaelsilveira.environment.createUser
 import io.github.emikaelsilveira.environment.createUser2
 import io.javalin.http.Context
+import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import io.mockk.verifyAll
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
 class UserControllerTest {
@@ -24,6 +24,9 @@ class UserControllerTest {
         private const val USER_ID = "id"
         private const val ID = "1"
     }
+
+    @AfterEach
+    fun down() = confirmVerified(service, context)
 
     @Test
     fun `should get a list of users`() {

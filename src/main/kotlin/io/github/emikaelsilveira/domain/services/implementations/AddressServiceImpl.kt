@@ -11,7 +11,7 @@ class AddressServiceImpl(
     private val repository: AddressRepository
 ) : AddressService {
 
-    override fun getByCep(cep: String) = this.addressProvider.getAddress(cep).toDomain().let { createOrUpdate(it) }
+    override fun getByCep(cep: String) = this.addressProvider.getAddress(cep).toDomain()
 
     override fun createOrUpdate(addressDTO: AddressDTO): AddressDTO {
         return when (val address = this.repository.getByCep(addressDTO.cep)) {
@@ -21,5 +21,4 @@ class AddressServiceImpl(
     }
 
     override fun getAll() = this.repository.getAll()
-
 }

@@ -4,12 +4,11 @@ import io.github.emikaelsilveira.domain.entities.UserDTO
 import io.github.emikaelsilveira.domain.repositories.UserRepository
 import io.github.emikaelsilveira.domain.services.AddressService
 import io.github.emikaelsilveira.domain.services.UserService
-import org.koin.core.KoinComponent
-import org.koin.core.inject
 
-class UserServiceImpl(private val repository: UserRepository) : UserService, KoinComponent {
-
-    private val addressService: AddressService by inject()
+class UserServiceImpl(
+    private val repository: UserRepository,
+    private val addressService: AddressService
+) : UserService {
 
     override fun getAll() = this.repository.getAll()
 

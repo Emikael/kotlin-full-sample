@@ -9,7 +9,8 @@ class AddressController(private val service: AddressService) {
         private const val CEP_PARAM = "cep"
     }
 
-    fun getByCep(context: Context) = this.service.getByCep(context.pathParam(CEP_PARAM))
+    fun getByCep(context: Context) =
+        service.getByCep(context.pathParam(CEP_PARAM)).let { service.createOrUpdate(it) }
 
-    fun getAll() = this.service.getAll()
+    fun getAll() = service.getAll()
 }
