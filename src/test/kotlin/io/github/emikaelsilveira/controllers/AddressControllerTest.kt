@@ -7,7 +7,6 @@ import io.javalin.http.Context
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import io.mockk.verifyAll
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -45,7 +44,7 @@ class AddressControllerTest {
 
         assertThat(address).isNotNull
         assertThat(address).isEqualTo(createAddress())
-        verifyAll {
+        verify {
             context.pathParam(CEP_PARAM)
             service.getByCep(CEP)
         }

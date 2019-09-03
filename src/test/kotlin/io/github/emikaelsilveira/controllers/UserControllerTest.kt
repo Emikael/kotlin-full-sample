@@ -8,6 +8,7 @@ import io.github.emikaelsilveira.environment.createUser2
 import io.javalin.http.Context
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import io.mockk.verifyAll
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -33,6 +34,7 @@ class UserControllerTest {
         assertThat(allUsers).isNotNull
         assertThat(allUsers).isNotEmpty
         assertThat(allUsers).isEqualTo(listOf(createUser()))
+        verify { service.getAll() }
     }
 
     @Test
@@ -44,7 +46,7 @@ class UserControllerTest {
 
         assertThat(user).isNotNull
         assertThat(user).isEqualTo(createUser())
-        verifyAll {
+        verify {
             context.pathParam(USER_ID)
             service.getOne(ID.toLong())
         }
@@ -60,7 +62,7 @@ class UserControllerTest {
 
         assertThat(user).isNotNull
         assertThat(user).isEqualTo(createUser2())
-        verifyAll {
+        verify {
             context.bodyAsClass(UserDTO::class.java)
             service.create(objectUser)
         }
@@ -77,7 +79,7 @@ class UserControllerTest {
 
         assertThat(user).isNotNull
         assertThat(user).isEqualTo(createUser2())
-        verifyAll {
+        verify {
             context.pathParam(USER_ID)
             context.bodyAsClass(UserDTO::class.java)
             service.update(ID.toLong(), objectUser)
@@ -91,7 +93,7 @@ class UserControllerTest {
 
         controller.delete(context)
 
-        verifyAll {
+        verify {
             context.pathParam(USER_ID)
             service.delete(ID.toLong())
         }
