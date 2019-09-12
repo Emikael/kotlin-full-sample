@@ -7,6 +7,7 @@ buildscript {
 
     dependencies {
         classpath(kotlin("gradle-plugin", "1.3.30"))
+        classpath("org.junit.platform:junit-platform-gradle-plugin:1.0.0")
     }
 }
 
@@ -26,8 +27,18 @@ repositories {
     maven(url = "https://dl.bintray.com/spekframework/spek-dev")
 }
 
+apply {
+    plugin("org.junit.platform.gradle.plugin")
+}
+
 application {
     mainClassName = "io.github.emikaelsilveira.application.KotlinFullSampleApplication"
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform() {
+        includeEngines("spek")
+    }
 }
 
 tasks.withType<Jar> {
@@ -50,15 +61,10 @@ dependencies {
     implementation("org.postgresql:postgresql:42.2.5")
     implementation("com.github.kittinunf.fuel:fuel:2.2.0")
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.1")
     testImplementation("io.mockk:mockk:1.9.3")
     testImplementation("org.assertj:assertj-core:3.11.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.5.1")
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
+    testImplementation("org.jetbrains.spek:spek-api:1.1.5")
+    testImplementation("org.jetbrains.spek:spek-junit-platform-engine:1.1.5")
 }
 
 tasks.withType<KotlinCompile> {
