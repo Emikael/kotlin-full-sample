@@ -1,7 +1,7 @@
 package io.github.emikaelsilveira.application.web.controllers
 
+import io.github.emikaelsilveira.builders.AddressDTOBuilder
 import io.github.emikaelsilveira.domain.services.AddressService
-import io.github.emikaelsilveira.environment.createAddress
 import io.javalin.http.Context
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -14,6 +14,8 @@ import org.jetbrains.spek.api.dsl.it
 
 object AddressControllerTest : Spek({
 
+    val cep = "88708-001"
+    val cepParam = "cep"
     val service = mockk<AddressService>()
     val context = mockk<Context>()
     val controller = AddressController(service)
@@ -24,36 +26,34 @@ object AddressControllerTest : Spek({
 
         describe("GET /Address") {
             it("should get a list of address") {
-                val mockListAddress = listOf(createAddress())
+                val mockListAddress = listOf(AddressDTOBuilder.build())
                 every { service.getAll() } returns mockListAddress
 
-                val allAddress = controller.getAll()
+                val result = controller.getAll()
 
-                assertThat(allAddress).isNotNull
-                assertThat(allAddress).isNotEmpty
-                assertThat(allAddress).isEqualTo(mockListAddress)
+                assertThat(result).isNotNull
+                assertThat(result).isNotEmpty
+                assertThat(result).isEqualTo(mockListAddress)
                 verify { service.getAll() }
             }
         }
 
         describe("GET /Address/:cep") {
             it("should get a address by cep and create or update on database") {
-                val cep = "88708-001"
-                val cepParam = "cep"
-                val objectAddress = createAddress()
+                val address = AddressDTOBuilder.build()
 
                 every { context.pathParam(cepParam) } returns cep
-                every { service.getByCep(cep) } returns objectAddress
-                every { service.createOrUpdate(objectAddress) } returns objectAddress
+                every { service.getByCep(cep) } returns address
+                every { service.createOrUpdate(address) } returns address
 
-                val address = controller.getByCep(context)
+                val result = controller.getByCep(context)
 
-                assertThat(address).isNotNull
-                assertThat(address).isEqualTo(createAddress())
+                assertThat(result).isNotNull
+                assertThat(result).isEqualTo(address)
                 verify {
                     context.pathParam(cepParam)
                     service.getByCep(cep)
-                    service.createOrUpdate(objectAddress)
+                    service.createOrUpdate(address)
                 }
             }
         }

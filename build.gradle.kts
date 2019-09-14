@@ -15,6 +15,7 @@ plugins {
     application
     kotlin("jvm") version "1.3.41"
     id("com.github.johnrengelman.shadow") version "5.1.0"
+    id("org.flywaydb.flyway") version "6.0.3"
 }
 
 group = "io.emikaelsilveira"
@@ -29,6 +30,7 @@ repositories {
 
 apply {
     plugin("org.junit.platform.gradle.plugin")
+    plugin("org.flywaydb.flyway")
 }
 
 application {
@@ -60,6 +62,7 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:1.7.28")
     implementation("org.postgresql:postgresql:42.2.5")
     implementation("com.github.kittinunf.fuel:fuel:2.2.0")
+    implementation("org.flywaydb:flyway-core:6.0.3")
 
     testImplementation("io.mockk:mockk:1.9.3")
     testImplementation("org.assertj:assertj-core:3.11.1")
@@ -69,4 +72,10 @@ dependencies {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+flyway {
+    url = "jdbc:postgresql://localhost:5432/kotlinfullsample"
+    user = "postgres"
+    password = "postgres"
 }
