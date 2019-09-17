@@ -32,7 +32,7 @@ class AddressRepositoryImpl(dataSource: DataSource) : AddressRepository {
             dtoToSchema(it, addressDTO)
             it[createdAt] = LocalDateTime.now().toDateTime()
         } get AddressSchema.id
-        addressDTO.copy(id = addressId)
+        AddressSchema.select { AddressSchema.id eq addressId }.map { it.toAddressDomain() }.first()
     }
 
     override fun update(id: Long, addressDTO: AddressDTO) = transaction {

@@ -68,6 +68,7 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.11.1")
     testImplementation("org.jetbrains.spek:spek-api:1.1.5")
     testImplementation("org.jetbrains.spek:spek-junit-platform-engine:1.1.5")
+    testImplementation("com.opentable.components:otj-pg-embedded:0.13.1")
 }
 
 tasks.withType<KotlinCompile> {

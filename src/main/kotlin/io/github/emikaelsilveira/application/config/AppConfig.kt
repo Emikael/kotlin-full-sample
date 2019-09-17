@@ -67,6 +67,7 @@ class AppConfig : KoinComponent {
                 addressRouter.register()
             }
 
+            //FIXME - Create a handler to controller exceptions on application
             app.exception(NotFoundException::class.java) { exception, ctx ->
                 ctx.status(NOT_FOUND_404)
                 exception.message?.let { ctx.result(it) }

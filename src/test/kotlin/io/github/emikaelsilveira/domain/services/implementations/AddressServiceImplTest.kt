@@ -50,7 +50,7 @@ object AddressServiceImplTest : Spek({
 
                 assertThat(result).isNotNull
                 assertThat(result).isNotEmpty
-                assertThat(result).size().isEqualTo(1)
+                assertThat(result).size().isOne
                 assertThat(result).isEqualTo(addressList)
                 verify { repository.getAll() }
             }

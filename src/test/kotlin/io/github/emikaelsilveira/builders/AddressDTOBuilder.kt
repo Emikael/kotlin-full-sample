@@ -5,14 +5,14 @@ import org.joda.time.LocalDateTime
 
 class AddressDTOBuilder {
 
-    var id = 1L
-    var cep = "88708-001"
+    var id: Long? = 1L
+    var cep = "88708-000"
     var street = "São João Street"
-    var complement = "São João Club Residential"
-    var neighborhood = "São João Margem Esquerda"
+    var complement = "de 902/903 a 1608/160"
+    var neighborhood = "São João (Margem Esquerda)"
     var city = "Tubarão"
     var state = "SC"
-    var ibge = 1238127L
+    var ibge = 4218707L
     var createAt: LocalDateTime? = null
     var updateAt: LocalDateTime? = null
 
