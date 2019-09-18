@@ -2,7 +2,7 @@ package io.github.emikaelsilveira.application.web.controllers
 
 import io.github.emikaelsilveira.domain.entities.UserDTO
 import io.github.emikaelsilveira.domain.services.UserService
-import io.github.emikaelsilveira.resource.extensions.paramAsLong
+import io.github.emikaelsilveira.resources.extensions.paramAsLong
 import io.javalin.http.Context
 
 class UserController(private val service: UserService) {

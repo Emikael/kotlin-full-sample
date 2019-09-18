@@ -1,8 +1,7 @@
-package io.github.emikaelsilveira.resource.repository
+package io.github.emikaelsilveira.resources.repositories
 
 import io.github.emikaelsilveira.builders.AddressDTOBuilder
 import io.github.emikaelsilveira.components.DataBaseComponent
-import io.github.emikaelsilveira.resource.repositories.AddressRepositoryImpl
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
@@ -17,7 +16,7 @@ object AddressRepositoryTest : Spek({
 
         beforeGroup {
             DataBaseComponent.init()
-            repository = AddressRepositoryImpl(DataBaseComponent.dataBaseConfig.dataSource)
+            repository = AddressRepositoryImpl(DataBaseComponent.getDataSource())
         }
         beforeEachTest { DataBaseComponent.clearDatabase() }
         afterGroup { DataBaseComponent.close() }
@@ -25,8 +24,11 @@ object AddressRepositoryTest : Spek({
         describe("Create Address") {
             it("should create an address on database") {
                 val result = repository.create(address)
+
                 assertThat(result).isNotNull
-                assertThat(result.id).isEqualTo(1L)
+                assertThat(result.id).isNotNull()
+                assertThat(result.createAt).isNotNull()
+                assertThat(result.updateAt).isNull()
             }
         }
 
@@ -36,6 +38,7 @@ object AddressRepositoryTest : Spek({
                 assertThat(addressSaved).isNotNull
 
                 val result = repository.getByCep(addressSaved.cep)
+
                 assertThat(result).isNotNull
                 assertThat(result?.id).isEqualTo(addressSaved.id)
                 assertThat(result?.cep).isEqualTo(addressSaved.cep)
@@ -43,6 +46,7 @@ object AddressRepositoryTest : Spek({
 
             it("should return null when fetching an address") {
                 val result = repository.getByCep(address.cep)
+
                 assertThat(result).isNull()
             }
         }
@@ -54,7 +58,9 @@ object AddressRepositoryTest : Spek({
                 assertThat(addressSaved).isNotNull
 
                 val result = repository.update(addressSaved.id!!, addressSaved.copy(cep = cep))
+
                 assertThat(result).isNotNull
+                assertThat(result.updateAt).isNotNull()
                 assertThat(result.id).isEqualTo(addressSaved.id!!)
                 assertThat(result.cep).isEqualTo(cep)
             }
@@ -66,6 +72,7 @@ object AddressRepositoryTest : Spek({
                 assertThat(addressSaved).isNotNull
 
                 val result = repository.getAll()
+
                 assertThat(result).isNotNull
                 assertThat(result).size().isOne
                 assertThat(result).first().isEqualTo(addressSaved)

@@ -1,7 +1,7 @@
 package io.github.emikaelsilveira.application.config.modules
 
 import io.github.emikaelsilveira.domain.providers.AddressProvider
-import io.github.emikaelsilveira.resource.viacep.consumers.ViaCepConsumer
+import io.github.emikaelsilveira.resources.viacep.consumers.ViaCepConsumer
 import org.koin.core.module.Module
 import org.koin.dsl.module
 

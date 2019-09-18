@@ -1,12 +1,12 @@
-package io.github.emikaelsilveira.resource.repositories
+package io.github.emikaelsilveira.resources.repositories
 
 import io.github.emikaelsilveira.domain.entities.UserDTO
 import io.github.emikaelsilveira.domain.exceptions.NotFoundException
 import io.github.emikaelsilveira.domain.repositories.UserRepository
-import io.github.emikaelsilveira.resource.extensions.dtoToSchema
-import io.github.emikaelsilveira.resource.extensions.toUserDomain
-import io.github.emikaelsilveira.resource.repositories.schemas.AddressSchema
-import io.github.emikaelsilveira.resource.repositories.schemas.UserSchema
+import io.github.emikaelsilveira.resources.extensions.dtoToSchema
+import io.github.emikaelsilveira.resources.extensions.toUserDomain
+import io.github.emikaelsilveira.resources.repositories.schemas.AddressSchema
+import io.github.emikaelsilveira.resources.repositories.schemas.UserSchema
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.deleteWhere

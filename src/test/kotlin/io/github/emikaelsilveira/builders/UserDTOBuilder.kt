@@ -8,10 +8,10 @@ class UserDTOBuilder {
     var id = 1L
     var name = "Emikael Silveira"
     var email = "emikael.silveira@gmail.com"
-    var phone = "(99) 9 9999-9999"
+    var phone = "(99) 99999-9999"
     var addressDTO = AddressDTOBuilder.build()
-    var createAt: LocalDateTime = LocalDateTime.now()
-    var updateAt: LocalDateTime = LocalDateTime.now()
+    private var createAt: LocalDateTime = LocalDateTime.now()
+    private var updateAt: LocalDateTime = LocalDateTime.now()
 
     private fun build() = UserDTO(
         id = id,

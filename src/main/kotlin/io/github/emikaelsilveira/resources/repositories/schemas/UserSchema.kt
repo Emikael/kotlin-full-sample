@@ -1,7 +1,7 @@
-package io.github.emikaelsilveira.resource.repositories.schemas
+package io.github.emikaelsilveira.resources.repositories.schemas
 
-import io.github.emikaelsilveira.resource.commons.DEFAULT_VARCHAR_LENGTH
-import io.github.emikaelsilveira.resource.commons.DEFAULT_VARCHAR_PHONE
+import io.github.emikaelsilveira.resources.commons.DEFAULT_VARCHAR_LENGTH
+import io.github.emikaelsilveira.resources.commons.DEFAULT_VARCHAR_PHONE
 import org.jetbrains.exposed.sql.Table
 
 object UserSchema : Table("users") {

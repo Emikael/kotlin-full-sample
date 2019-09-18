@@ -1,4 +1,4 @@
-package io.github.emikaelsilveira.resource.viacep.entities
+package io.github.emikaelsilveira.resources.viacep.entities
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.github.emikaelsilveira.domain.entities.AddressConvertable

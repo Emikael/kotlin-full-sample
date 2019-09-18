@@ -1,9 +1,9 @@
-package io.github.emikaelsilveira.resource.extensions
+package io.github.emikaelsilveira.resources.extensions
 
 import io.github.emikaelsilveira.domain.entities.AddressDTO
 import io.github.emikaelsilveira.domain.entities.UserDTO
-import io.github.emikaelsilveira.resource.repositories.schemas.AddressSchema
-import io.github.emikaelsilveira.resource.repositories.schemas.UserSchema
+import io.github.emikaelsilveira.resources.repositories.schemas.AddressSchema
+import io.github.emikaelsilveira.resources.repositories.schemas.UserSchema
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 

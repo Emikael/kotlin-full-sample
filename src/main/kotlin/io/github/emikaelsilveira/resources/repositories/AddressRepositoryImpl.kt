@@ -1,10 +1,10 @@
-package io.github.emikaelsilveira.resource.repositories
+package io.github.emikaelsilveira.resources.repositories
 
 import io.github.emikaelsilveira.domain.entities.AddressDTO
 import io.github.emikaelsilveira.domain.repositories.AddressRepository
-import io.github.emikaelsilveira.resource.extensions.dtoToSchema
-import io.github.emikaelsilveira.resource.extensions.toAddressDomain
-import io.github.emikaelsilveira.resource.repositories.schemas.AddressSchema
+import io.github.emikaelsilveira.resources.extensions.dtoToSchema
+import io.github.emikaelsilveira.resources.extensions.toAddressDomain
+import io.github.emikaelsilveira.resources.repositories.schemas.AddressSchema
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.insert

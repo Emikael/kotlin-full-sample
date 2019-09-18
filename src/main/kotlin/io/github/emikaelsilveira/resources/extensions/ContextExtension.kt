@@ -1,4 +1,4 @@
-package io.github.emikaelsilveira.resource.extensions
+package io.github.emikaelsilveira.resources.extensions
 
 import io.javalin.http.Context
 

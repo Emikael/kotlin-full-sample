@@ -1,4 +1,4 @@
-package io.github.emikaelsilveira.resource.viacep.consumers
+package io.github.emikaelsilveira.resources.viacep.consumers
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.github.kittinunf.fuel.Fuel
@@ -6,8 +6,8 @@ import io.github.emikaelsilveira.application.config.ignoreUnknownProperties
 import io.github.emikaelsilveira.application.config.objectMapper
 import io.github.emikaelsilveira.domain.entities.AddressConvertable
 import io.github.emikaelsilveira.domain.providers.AddressProvider
-import io.github.emikaelsilveira.resource.viacep.entities.ViaCepAddress
-import io.github.emikaelsilveira.resource.viacep.exceptions.APIException
+import io.github.emikaelsilveira.resources.viacep.entities.ViaCepAddress
+import io.github.emikaelsilveira.resources.viacep.exceptions.APIException
 
 class ViaCepConsumer : AddressProvider {
 

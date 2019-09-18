@@ -14,7 +14,7 @@ object DataBaseComponent {
     private const val MOCK_DB_PORT = 32971
 
     private lateinit var embeddedPostgres: EmbeddedPostgres
-    lateinit var dataBaseConfig: DatabaseConfig
+    private lateinit var dataBaseConfig: DatabaseConfig
 
     private val flywayConfiguration = Flyway.configure().run {
         dataSource(
@@ -35,16 +35,16 @@ object DataBaseComponent {
     }
 
     fun close() {
-        with(dataBaseConfig.dataSource.connection) {
+        with(getDataSource().connection) {
             if (!isClosed) close()
         }
         embeddedPostgres.close()
     }
 
-    fun clearDatabase() {
-        flywayConfiguration.apply {
-            clean()
-            migrate()
-        }
+    fun clearDatabase(): Flyway = flywayConfiguration.apply {
+        clean()
+        migrate()
     }
+
+    fun getDataSource() = dataBaseConfig.dataSource
 }

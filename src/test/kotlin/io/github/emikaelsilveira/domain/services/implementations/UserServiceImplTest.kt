@@ -18,7 +18,7 @@ import org.jetbrains.spek.api.dsl.it
 class UserServiceImplTest : Spek({
 
     val uuId = 1L
-    val cep = "88708-001"
+    val cep = "88708-000"
     val repository = mockk<UserRepository>()
     val addressService = mockk<AddressService>()
     val service = UserServiceImpl(repository, addressService)
