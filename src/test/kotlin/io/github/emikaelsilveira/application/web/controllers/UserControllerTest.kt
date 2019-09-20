@@ -17,90 +17,90 @@ object UserControllerTest : Spek({
 
     val userId = "id"
     val uuId = "1"
-    val service = mockk<UserService>()
-    val context = mockk<Context>()
-    val controller = UserController(service)
+    val serviceMock = mockk<UserService>()
+    val contextMock = mockk<Context>()
+    val controller = UserController(serviceMock)
     val user = UserDTOBuilder.build()
-    val createUser = UserDTOBuilder.build { id = 2 }
+    val otherUser = UserDTOBuilder.build { id = 2 }
 
     describe("#UserController") {
 
-        afterEachTest { confirmVerified(service, context) }
+        afterEachTest { confirmVerified(serviceMock, contextMock) }
 
         describe("GET /users") {
             it("should get a list of users") {
                 val userList = listOf(UserDTOBuilder.build())
-                every { service.getAll() } returns userList
+                every { serviceMock.getAll() } returns userList
 
                 val result = controller.getAll()
 
                 assertThat(result).isNotNull
                 assertThat(result).isNotEmpty
                 assertThat(result).isEqualTo(userList)
-                verify { service.getAll() }
+                verify { serviceMock.getAll() }
             }
         }
 
         describe("GET /users/:id") {
             it("should get a user by id") {
-                every { context.pathParam(userId) } returns uuId
-                every { service.getOne(uuId.toLong()) } returns user
+                every { contextMock.pathParam(userId) } returns uuId
+                every { serviceMock.getOne(uuId.toLong()) } returns user
 
-                val result = controller.getOne(context)
+                val result = controller.getOne(contextMock)
 
                 assertThat(result).isNotNull
                 assertThat(result).isEqualTo(user)
                 verify {
-                    context.pathParam(userId)
-                    service.getOne(uuId.toLong())
+                    contextMock.pathParam(userId)
+                    serviceMock.getOne(uuId.toLong())
                 }
             }
         }
 
         describe("POST /users") {
             it("should create a new user") {
-                every { context.bodyAsClass(UserDTO::class.java) } returns user
-                every { service.create(user) } returns createUser
+                every { contextMock.bodyAsClass(UserDTO::class.java) } returns user
+                every { serviceMock.create(user) } returns otherUser
 
-                val result = controller.create(context)
+                val result = controller.create(contextMock)
 
                 assertThat(result).isNotNull
-                assertThat(result).isEqualTo(createUser)
+                assertThat(result).isEqualTo(otherUser)
                 verify {
-                    context.bodyAsClass(UserDTO::class.java)
-                    service.create(user)
+                    contextMock.bodyAsClass(UserDTO::class.java)
+                    serviceMock.create(user)
                 }
             }
         }
 
         describe("PUT /users/:id") {
             it("should update a user") {
-                every { context.pathParam(userId) } returns uuId
-                every { context.bodyAsClass(UserDTO::class.java) } returns user
-                every { service.update(uuId.toLong(), user) } returns createUser
+                every { contextMock.pathParam(userId) } returns uuId
+                every { contextMock.bodyAsClass(UserDTO::class.java) } returns user
+                every { serviceMock.update(uuId.toLong(), user) } returns otherUser
 
-                val result = controller.update(context)
+                val result = controller.update(contextMock)
 
                 assertThat(result).isNotNull
-                assertThat(result).isEqualTo(createUser)
+                assertThat(result).isEqualTo(otherUser)
                 verify {
-                    context.pathParam(userId)
-                    context.bodyAsClass(UserDTO::class.java)
-                    service.update(uuId.toLong(), user)
+                    contextMock.pathParam(userId)
+                    contextMock.bodyAsClass(UserDTO::class.java)
+                    serviceMock.update(uuId.toLong(), user)
                 }
             }
         }
 
         describe("DELETE /users/:id") {
             it("should delete a user") {
-                every { context.pathParam(userId) } returns uuId
-                every { service.delete(uuId.toLong()) } returns Unit
+                every { contextMock.pathParam(userId) } returns uuId
+                every { serviceMock.delete(uuId.toLong()) } returns Unit
 
-                controller.delete(context)
+                controller.delete(contextMock)
 
                 verify {
-                    context.pathParam(userId)
-                    service.delete(uuId.toLong())
+                    contextMock.pathParam(userId)
+                    serviceMock.delete(uuId.toLong())
                 }
             }
         }

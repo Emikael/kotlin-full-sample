@@ -21,7 +21,7 @@ class ViaCepConsumer : AddressProvider {
         val (_, response, result) = Fuel.get(VIA_CEP_HOST.format(cep)).responseString()
         return result.fold(
             { content -> successRequest(content) },
-            { throw APIException(response.data.let { customObjectMapper.readValue<String>(it) }) }
+            { throw APIException(String(response.data)) }
         )
     }
 

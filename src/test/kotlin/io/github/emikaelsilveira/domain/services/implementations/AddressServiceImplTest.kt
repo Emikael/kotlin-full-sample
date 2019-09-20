@@ -17,34 +17,34 @@ object AddressServiceImplTest : Spek({
 
     val uuId = 1L
     val cep = "88708-001"
-    val provider = mockk<AddressProvider>()
-    val repository = mockk<AddressRepository>()
-    val service = AddressServiceImpl(provider, repository)
+    val providerMock = mockk<AddressProvider>()
+    val repositoryMock = mockk<AddressRepository>()
+    val service = AddressServiceImpl(providerMock, repositoryMock)
     val address = AddressDTOBuilder.build()
 
     describe("#AddressService") {
 
         afterEachTest {
-            confirmVerified(provider, repository)
+            confirmVerified(providerMock, repositoryMock)
             clearAllMocks()
         }
 
         describe("AddressServiceImpl.getByCep(cep: String): AddressDTO") {
             it("should return a address by cep") {
-                every { provider.getAddress(cep).toDomain() } returns address
+                every { providerMock.getAddress(cep).toDomain() } returns address
 
                 val result = service.getByCep(cep)
 
                 assertThat(result).isNotNull
                 assertThat(result).isEqualTo(address)
-                verify { provider.getAddress(cep).toDomain() }
+                verify { providerMock.getAddress(cep).toDomain() }
             }
         }
 
         describe("AddressServiceImpl.getAll(): List<AddressDTO>") {
             it("should return all address") {
                 val addressList = listOf(address)
-                every { repository.getAll() } returns addressList
+                every { repositoryMock.getAll() } returns addressList
 
                 val result = service.getAll()
 
@@ -52,41 +52,41 @@ object AddressServiceImplTest : Spek({
                 assertThat(result).isNotEmpty
                 assertThat(result).size().isOne
                 assertThat(result).isEqualTo(addressList)
-                verify { repository.getAll() }
+                verify { repositoryMock.getAll() }
             }
         }
 
         describe("AddressServiceImpl.createOrUpdate(address: AddressDTO): AddressDTO") {
             it("should create a new address on database") {
-                every { repository.getByCep(address.cep) } returns null
-                every { repository.create(address) } returns address
+                every { repositoryMock.getByCep(address.cep) } returns null
+                every { repositoryMock.create(address) } returns address
 
                 val result = service.createOrUpdate(address)
 
                 assertThat(result).isNotNull
                 assertThat(result).isEqualTo(address)
                 verify {
-                    repository.getByCep(address.cep)
-                    repository.create(address)
+                    repositoryMock.getByCep(address.cep)
+                    repositoryMock.create(address)
                 }
 
-                verify(exactly = 0) { repository.update(any(), any()) }
+                verify(exactly = 0) { repositoryMock.update(any(), any()) }
             }
 
             it("should update a address on database") {
-                every { repository.getByCep(address.cep) } returns address
-                every { repository.update(uuId, address) } returns address
+                every { repositoryMock.getByCep(address.cep) } returns address
+                every { repositoryMock.update(uuId, address) } returns address
 
                 val result = service.createOrUpdate(address)
 
                 assertThat(result).isNotNull
                 assertThat(result).isEqualTo(address)
                 verify {
-                    repository.getByCep(address.cep)
-                    repository.update(uuId, address)
+                    repositoryMock.getByCep(address.cep)
+                    repositoryMock.update(uuId, address)
                 }
 
-                verify(exactly = 0) { repository.create(any()) }
+                verify(exactly = 0) { repositoryMock.create(any()) }
             }
         }
     }

@@ -16,25 +16,25 @@ object AddressControllerTest : Spek({
 
     val cep = "88708-001"
     val cepParam = "cep"
-    val service = mockk<AddressService>()
-    val context = mockk<Context>()
-    val controller = AddressController(service)
+    val serviceMock = mockk<AddressService>()
+    val contextMock = mockk<Context>()
+    val controller = AddressController(serviceMock)
 
     describe("#AddressController") {
 
-        afterEachTest { confirmVerified(service, context) }
+        afterEachTest { confirmVerified(serviceMock, contextMock) }
 
         describe("GET /Address") {
             it("should get a list of address") {
                 val mockListAddress = listOf(AddressDTOBuilder.build())
-                every { service.getAll() } returns mockListAddress
+                every { serviceMock.getAll() } returns mockListAddress
 
                 val result = controller.getAll()
 
                 assertThat(result).isNotNull
                 assertThat(result).isNotEmpty
                 assertThat(result).isEqualTo(mockListAddress)
-                verify { service.getAll() }
+                verify { serviceMock.getAll() }
             }
         }
 
@@ -42,18 +42,18 @@ object AddressControllerTest : Spek({
             it("should get a address by cep and create or update on database") {
                 val address = AddressDTOBuilder.build()
 
-                every { context.pathParam(cepParam) } returns cep
-                every { service.getByCep(cep) } returns address
-                every { service.createOrUpdate(address) } returns address
+                every { contextMock.pathParam(cepParam) } returns cep
+                every { serviceMock.getByCep(cep) } returns address
+                every { serviceMock.createOrUpdate(address) } returns address
 
-                val result = controller.getByCep(context)
+                val result = controller.getByCep(contextMock)
 
                 assertThat(result).isNotNull
                 assertThat(result).isEqualTo(address)
                 verify {
-                    context.pathParam(cepParam)
-                    service.getByCep(cep)
-                    service.createOrUpdate(address)
+                    contextMock.pathParam(cepParam)
+                    serviceMock.getByCep(cep)
+                    serviceMock.createOrUpdate(address)
                 }
             }
         }
