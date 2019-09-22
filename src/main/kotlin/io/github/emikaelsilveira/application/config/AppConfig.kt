@@ -8,6 +8,7 @@ import io.github.emikaelsilveira.application.config.modules.repositoryModule
 import io.github.emikaelsilveira.application.config.modules.routerModule
 import io.github.emikaelsilveira.application.config.modules.serviceModule
 import io.github.emikaelsilveira.application.web.routers.AddressRouter
+import io.github.emikaelsilveira.application.web.routers.Router
 import io.github.emikaelsilveira.application.web.routers.UserRouter
 import io.github.emikaelsilveira.domain.exceptions.NotFoundException
 import io.javalin.Javalin
@@ -19,6 +20,7 @@ import org.koin.core.KoinComponent
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.core.inject
+import org.koin.core.qualifier.named
 
 class AppConfig : KoinComponent {
 
@@ -30,11 +32,10 @@ class AppConfig : KoinComponent {
         private const val APPLICATION_PORT = 7000
     }
 
-    private val userRouter: UserRouter by inject()
-    private val addressRouter: AddressRouter by inject()
+    private val routers: List<Router> by inject(named("routers"))
 
-    fun setup() {
-        startServer {
+    fun setup(): Javalin {
+        return startServer {
             stopKoin()
         }
     }
@@ -55,19 +56,16 @@ class AppConfig : KoinComponent {
         }
     }
 
-    private fun startServer(shutdown: () -> Unit) {
-        Javalin.create { config ->
+    private fun startServer(shutdown: () -> Unit): Javalin {
+        return Javalin.create { config ->
             config.enableCorsForAllOrigins()
             config.showJavalinBanner = false
         }.events { event ->
             event.serverStopped(shutdown)
         }.also { app ->
-            app.routes {
-                userRouter.register()
-                addressRouter.register()
-            }
+            app.routes { routers.forEach { it.register() } }
 
-            //FIXME - Create a handler to controller exceptions on application
+            // FIXME - Create a handler to controller exceptions on application
             app.exception(NotFoundException::class.java) { exception, ctx ->
                 ctx.status(NOT_FOUND_404)
                 exception.message?.let { ctx.result(it) }

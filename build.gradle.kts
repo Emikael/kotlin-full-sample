@@ -63,6 +63,7 @@ dependencies {
     implementation("org.postgresql:postgresql:42.2.5")
     implementation("com.github.kittinunf.fuel:fuel:2.2.0")
     implementation("org.flywaydb:flyway-core:6.0.3")
+    implementation("org.json:json:20190722")
 
     testImplementation("io.mockk:mockk:1.9.3")
     testImplementation("org.assertj:assertj-core:3.11.1")

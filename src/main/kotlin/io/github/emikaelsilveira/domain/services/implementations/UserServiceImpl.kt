@@ -10,24 +10,26 @@ class UserServiceImpl(
     private val addressService: AddressService
 ) : UserService {
 
-    override fun getAll() = this.repository.getAll()
+    override fun getAll() = repository.getAll()
 
-    override fun getOne(id: Long) = this.repository.getOne(id)
+    override fun getOne(id: Long) = repository.getOne(id)
 
     override fun create(userDTO: UserDTO): UserDTO {
         val user = getUserWithAddress(userDTO)
-        return this.repository.create(user)
+        return repository.create(user)
     }
 
     override fun update(id: Long, userDTO: UserDTO): UserDTO {
         val user = getUserWithAddress(userDTO)
-        return this.repository.update(id, user)
+        return repository.update(id, user)
     }
 
-    override fun delete(id: Long) = this.repository.delete(id)
+    override fun delete(id: Long) = repository.delete(id)
 
     private fun getUserWithAddress(userDTO: UserDTO): UserDTO {
-        val address = userDTO.addressDTO?.cep?.let { this.addressService.getByCep(it) }
+        val address = userDTO.addressDTO?.cep
+            ?.let { addressService.getByCep(it) }
+            ?.let { addressService.createOrUpdate(it) }
         return userDTO.copy(addressDTO = address)
     }
 }

@@ -1,4 +1,4 @@
-package io.github.emikaelsilveira.builders
+package io.github.emikaelsilveira.utils.builders
 
 import io.github.emikaelsilveira.domain.entities.AddressDTO
 import org.joda.time.LocalDateTime

@@ -1,6 +1,7 @@
-package io.github.emikaelsilveira.application.web.controllers
+package io.github.emikaelsilveira.kotlinfullsample.controllers
 
-import io.github.emikaelsilveira.builders.UserDTOBuilder
+import io.github.emikaelsilveira.application.web.controllers.UserController
+import io.github.emikaelsilveira.utils.builders.UserDTOBuilder
 import io.github.emikaelsilveira.domain.entities.UserDTO
 import io.github.emikaelsilveira.domain.services.UserService
 import io.javalin.http.Context

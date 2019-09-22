@@ -148,9 +148,9 @@
 					"response": []
 				},
 				{
-					"name": "Get a address",
+					"name": "Get and accepted a address",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"url": {
 							"raw": "localhost:7000/address/91790072",

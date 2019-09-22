@@ -1,7 +1,8 @@
-package io.github.emikaelsilveira.resources.repositories
+package io.github.emikaelsilveira.kotlinfullsample.resources.repositories
 
-import io.github.emikaelsilveira.builders.AddressDTOBuilder
-import io.github.emikaelsilveira.components.DataBaseComponent
+import io.github.emikaelsilveira.resources.repositories.AddressRepositoryImpl
+import io.github.emikaelsilveira.utils.builders.AddressDTOBuilder
+import io.github.emikaelsilveira.utils.components.DataBaseComponent
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
@@ -18,7 +19,9 @@ object AddressRepositoryTest : Spek({
             DataBaseComponent.init()
             repository = AddressRepositoryImpl(DataBaseComponent.getDataSource())
         }
+
         beforeEachTest { DataBaseComponent.clearDatabase() }
+
         afterGroup { DataBaseComponent.close() }
 
         describe("Create Address") {

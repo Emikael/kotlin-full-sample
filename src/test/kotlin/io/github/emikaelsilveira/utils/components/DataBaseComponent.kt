@@ -1,9 +1,19 @@
-package io.github.emikaelsilveira.components
+package io.github.emikaelsilveira.utils.components
 
 import com.opentable.db.postgres.embedded.EmbeddedPostgres
 import io.github.emikaelsilveira.application.config.database.DatabaseConfig
+import io.github.emikaelsilveira.domain.entities.AddressDTO
+import io.github.emikaelsilveira.domain.entities.UserDTO
+import io.github.emikaelsilveira.resources.extensions.dtoToSchema
+import io.github.emikaelsilveira.resources.repositories.schemas.AddressSchema
+import io.github.emikaelsilveira.resources.repositories.schemas.UserSchema
+import io.github.emikaelsilveira.utils.builders.AddressDTOBuilder
+import io.github.emikaelsilveira.utils.builders.UserDTOBuilder
 import org.flywaydb.core.Flyway
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.transactions.transaction
+import org.joda.time.LocalDateTime
 
 object DataBaseComponent {
 
@@ -47,4 +57,22 @@ object DataBaseComponent {
     }
 
     fun getDataSource() = dataBaseConfig.dataSource
+
+    fun insertUser(user: UserDTO = UserDTOBuilder.build()) {
+        transaction {
+            UserSchema.insert {
+                dtoToSchema(it, user)
+                it[createdAt] = LocalDateTime.now().toDateTime()
+            }
+        }
+    }
+
+    fun insertAddress(address: AddressDTO = AddressDTOBuilder.build()) {
+        transaction {
+            AddressSchema.insert {
+                dtoToSchema(it, address)
+                it[createdAt] = LocalDateTime.now().toDateTime()
+            }
+        }
+    }
 }

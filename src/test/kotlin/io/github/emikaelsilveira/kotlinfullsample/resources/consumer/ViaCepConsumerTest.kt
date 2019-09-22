@@ -1,8 +1,8 @@
-package io.github.emikaelsilveira.resources.viacep.consumer
+package io.github.emikaelsilveira.kotlinfullsample.resources.consumer
 
 import com.github.kittinunf.fuel.core.Client
 import com.github.kittinunf.fuel.core.FuelManager
-import io.github.emikaelsilveira.resources.extensions.payload
+import io.github.emikaelsilveira.utils.extensions.payload
 import io.github.emikaelsilveira.resources.viacep.consumers.ViaCepConsumer
 import io.github.emikaelsilveira.resources.viacep.exceptions.APIException
 import io.mockk.every

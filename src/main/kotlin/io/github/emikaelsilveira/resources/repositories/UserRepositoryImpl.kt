@@ -27,11 +27,11 @@ class UserRepositoryImpl(dataSource: DataSource) : UserRepository {
     }
 
     override fun getAll() = transaction {
-        (UserSchema innerJoin AddressSchema).selectAll().map { it.toUserDomain() }
+        (UserSchema leftJoin AddressSchema).selectAll().map { it.toUserDomain() }
     }
 
     override fun getOne(id: Long) = transaction {
-        (UserSchema innerJoin AddressSchema).select { UserSchema.id eq id }.map { it.toUserDomain() }.firstOrNull()
+        (UserSchema leftJoin AddressSchema).select { UserSchema.id eq id }.map { it.toUserDomain() }.firstOrNull()
             ?: throw NotFoundException(id.toString())
     }
 
@@ -40,7 +40,7 @@ class UserRepositoryImpl(dataSource: DataSource) : UserRepository {
             dtoToSchema(it, userDTO)
             it[createdAt] = LocalDateTime.now().toDateTime()
         } get UserSchema.id
-        (UserSchema innerJoin AddressSchema).select { UserSchema.id eq userId }.map { it.toUserDomain() }.first()
+        (UserSchema leftJoin AddressSchema).select { UserSchema.id eq userId }.map { it.toUserDomain() }.first()
     }
 
     override fun update(id: Long, userDTO: UserDTO) = transaction {
@@ -48,7 +48,7 @@ class UserRepositoryImpl(dataSource: DataSource) : UserRepository {
             dtoToSchema(it, userDTO)
             it[updatedAt] = LocalDateTime.now().toDateTime()
         }.let {
-            (UserSchema innerJoin AddressSchema).select { UserSchema.id eq id }.map { it.toUserDomain() }.first()
+            (UserSchema leftJoin AddressSchema).select { UserSchema.id eq id }.map { it.toUserDomain() }.first()
         }
     }
 

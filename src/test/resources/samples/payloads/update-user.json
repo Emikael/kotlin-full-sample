@@ -1,0 +1,8 @@
+{
+  "name": "Emikael Silveira",
+  "email": "emikael.silveira@kotlin.com",
+  "phone": "(88)3 3333-2222",
+  "address": {
+    "cep": "88708001"
+  }
+}

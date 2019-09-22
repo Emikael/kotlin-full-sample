@@ -1,8 +1,9 @@
-package io.github.emikaelsilveira.domain.services.implementations
+package io.github.emikaelsilveira.kotlinfullsample.services
 
-import io.github.emikaelsilveira.builders.AddressDTOBuilder
+import io.github.emikaelsilveira.utils.builders.AddressDTOBuilder
 import io.github.emikaelsilveira.domain.providers.AddressProvider
 import io.github.emikaelsilveira.domain.repositories.AddressRepository
+import io.github.emikaelsilveira.domain.services.implementations.AddressServiceImpl
 import io.mockk.clearAllMocks
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -19,7 +20,8 @@ object AddressServiceImplTest : Spek({
     val cep = "88708-001"
     val providerMock = mockk<AddressProvider>()
     val repositoryMock = mockk<AddressRepository>()
-    val service = AddressServiceImpl(providerMock, repositoryMock)
+    val service =
+        AddressServiceImpl(providerMock, repositoryMock)
     val address = AddressDTOBuilder.build()
 
     describe("#AddressService") {

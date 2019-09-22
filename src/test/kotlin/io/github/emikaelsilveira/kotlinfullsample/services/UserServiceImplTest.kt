@@ -1,9 +1,10 @@
-package io.github.emikaelsilveira.domain.services.implementations
+package io.github.emikaelsilveira.kotlinfullsample.services
 
-import io.github.emikaelsilveira.builders.AddressDTOBuilder
-import io.github.emikaelsilveira.builders.UserDTOBuilder
+import io.github.emikaelsilveira.utils.builders.AddressDTOBuilder
+import io.github.emikaelsilveira.utils.builders.UserDTOBuilder
 import io.github.emikaelsilveira.domain.repositories.UserRepository
 import io.github.emikaelsilveira.domain.services.AddressService
+import io.github.emikaelsilveira.domain.services.implementations.UserServiceImpl
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.just
@@ -21,7 +22,8 @@ class UserServiceImplTest : Spek({
     val cep = "88708-000"
     val repositoryMock = mockk<UserRepository>()
     val addressServiceMock = mockk<AddressService>()
-    val service = UserServiceImpl(repositoryMock, addressServiceMock)
+    val service =
+        UserServiceImpl(repositoryMock, addressServiceMock)
     val user = UserDTOBuilder.build()
     val otherUser = UserDTOBuilder.build { id = 2 }
     val address = AddressDTOBuilder.build()

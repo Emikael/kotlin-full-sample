@@ -1,19 +1,13 @@
-package io.github.emikaelsilveira.resources.repositories
+package io.github.emikaelsilveira.kotlinfullsample.resources.repositories
 
-import io.github.emikaelsilveira.builders.AddressDTOBuilder
-import io.github.emikaelsilveira.builders.UserDTOBuilder
-import io.github.emikaelsilveira.components.DataBaseComponent
-import io.github.emikaelsilveira.domain.entities.AddressDTO
 import io.github.emikaelsilveira.domain.entities.UserDTO
-import io.github.emikaelsilveira.resources.extensions.dtoToSchema
-import io.github.emikaelsilveira.resources.repositories.schemas.AddressSchema
+import io.github.emikaelsilveira.resources.repositories.UserRepositoryImpl
+import io.github.emikaelsilveira.utils.builders.UserDTOBuilder
+import io.github.emikaelsilveira.utils.components.DataBaseComponent
 import org.assertj.core.api.Assertions.assertThat
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
-import org.joda.time.LocalDateTime
 
 object UserRepositoryTest : Spek({
 
@@ -25,11 +19,12 @@ object UserRepositoryTest : Spek({
 
         beforeGroup {
             DataBaseComponent.init()
-            repository = UserRepositoryImpl(DataBaseComponent.getDataSource())
+            repository =
+                UserRepositoryImpl(DataBaseComponent.getDataSource())
         }
         beforeEachTest {
             DataBaseComponent.clearDatabase()
-            insertAddress()
+            DataBaseComponent.insertAddress()
             user = repository.create(otherUser)
         }
         afterGroup { DataBaseComponent.close() }
@@ -86,12 +81,3 @@ object UserRepositoryTest : Spek({
         }
     }
 })
-
-private fun insertAddress(addressDTO: AddressDTO = AddressDTOBuilder.build()) {
-    transaction {
-        AddressSchema.insert {
-            dtoToSchema(it, addressDTO)
-            it[createdAt] = LocalDateTime.now().toDateTime()
-        }
-    }
-}

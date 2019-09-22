@@ -1,6 +1,7 @@
-package io.github.emikaelsilveira.application.web.controllers
+package io.github.emikaelsilveira.kotlinfullsample.controllers
 
-import io.github.emikaelsilveira.builders.AddressDTOBuilder
+import io.github.emikaelsilveira.application.web.controllers.AddressController
+import io.github.emikaelsilveira.utils.builders.AddressDTOBuilder
 import io.github.emikaelsilveira.domain.services.AddressService
 import io.javalin.http.Context
 import io.mockk.confirmVerified
