@@ -1,4 +1,4 @@
-package io.github.emikaelsilveira.kotlinfullsample.controllers
+package io.github.emikaelsilveira.controllers
 
 import io.github.emikaelsilveira.application.web.controllers.UserController
 import io.github.emikaelsilveira.utils.builders.UserDTOBuilder

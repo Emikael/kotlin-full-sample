@@ -1,9 +1,9 @@
-package io.github.emikaelsilveira.kotlinfullsample.services
+package io.github.emikaelsilveira.services
 
-import io.github.emikaelsilveira.utils.builders.AddressDTOBuilder
 import io.github.emikaelsilveira.domain.providers.AddressProvider
 import io.github.emikaelsilveira.domain.repositories.AddressRepository
 import io.github.emikaelsilveira.domain.services.implementations.AddressServiceImpl
+import io.github.emikaelsilveira.utils.builders.AddressDTOBuilder
 import io.mockk.clearAllMocks
 import io.mockk.confirmVerified
 import io.mockk.every

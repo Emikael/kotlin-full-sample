@@ -1,10 +1,10 @@
-package io.github.emikaelsilveira.kotlinfullsample.services
+package io.github.emikaelsilveira.services
 
-import io.github.emikaelsilveira.utils.builders.AddressDTOBuilder
-import io.github.emikaelsilveira.utils.builders.UserDTOBuilder
 import io.github.emikaelsilveira.domain.repositories.UserRepository
 import io.github.emikaelsilveira.domain.services.AddressService
 import io.github.emikaelsilveira.domain.services.implementations.UserServiceImpl
+import io.github.emikaelsilveira.utils.builders.AddressDTOBuilder
+import io.github.emikaelsilveira.utils.builders.UserDTOBuilder
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.just
@@ -64,6 +64,7 @@ class UserServiceImplTest : Spek({
             it("should create a user") {
                 every { repositoryMock.create(user) } returns otherUser
                 every { addressServiceMock.getByCep(cep) } returns address
+                every { addressServiceMock.createOrUpdate(address) } returns address
 
                 val result = service.create(user)
 
@@ -72,6 +73,7 @@ class UserServiceImplTest : Spek({
                 verify {
                     repositoryMock.create(user)
                     addressServiceMock.getByCep(cep)
+                    addressServiceMock.createOrUpdate(address)
                 }
             }
         }
@@ -80,6 +82,7 @@ class UserServiceImplTest : Spek({
             it("should update a user") {
                 every { repositoryMock.update(uuId, user) } returns otherUser
                 every { addressServiceMock.getByCep(cep) } returns address
+                every { addressServiceMock.createOrUpdate(address) } returns address
 
                 val result = service.update(uuId, user)
 
@@ -89,6 +92,7 @@ class UserServiceImplTest : Spek({
                 verify {
                     repositoryMock.update(uuId, user)
                     addressServiceMock.getByCep(cep)
+                    addressServiceMock.createOrUpdate(address)
                 }
             }
         }

@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
@@ -37,18 +38,51 @@ application {
     mainClassName = "io.github.emikaelsilveira.application.KotlinFullSampleApplication"
 }
 
-tasks.withType<Test> {
+val sourceSets = the<SourceSetContainer>()
+
+sourceSets {
+    create("integrationTest") {
+        withConvention(KotlinSourceSet::class) {
+            kotlin.srcDir("src/integrationTest/kotlin")
+            resources.srcDir("src/integrationTest/resources")
+            compileClasspath += sourceSets["main"].output + configurations["testRuntimeClasspath"]
+            runtimeClasspath += output + compileClasspath + sourceSets["test"].runtimeClasspath
+        }
+    }
+}
+
+tasks.test {
     useJUnitPlatform() {
         includeEngines("spek")
     }
 }
 
-tasks.withType<Jar> {
+task<Test>("integrationTest") {
+    description = "Runs the integration tests"
+    group = "verification"
+    testClassesDirs = sourceSets["integrationTest"].output.classesDirs
+    classpath = sourceSets["integrationTest"].runtimeClasspath
+    mustRunAfter(tasks["test"])
+
+    useJUnitPlatform() {
+        includeEngines("spek")
+    }
+}
+
+tasks.named("test") {
+    finalizedBy("integrationTest")
+}
+
+tasks.jar {
     manifest {
         attributes(
             mapOf("Main-Class" to application.mainClassName)
         )
     }
+}
+
+val integrationTestImplementation: Configuration by configurations.getting {
+    extendsFrom(configurations.testImplementation.get())
 }
 
 dependencies {
@@ -70,6 +104,12 @@ dependencies {
     testImplementation("org.jetbrains.spek:spek-api:1.1.5")
     testImplementation("org.jetbrains.spek:spek-junit-platform-engine:1.1.5")
     testImplementation("com.opentable.components:otj-pg-embedded:0.13.1")
+
+    integrationTestImplementation("org.assertj:assertj-core:3.11.1")
+    integrationTestImplementation("org.jetbrains.spek:spek-api:1.1.5")
+    integrationTestImplementation("org.jetbrains.spek:spek-junit-platform-engine:1.1.5")
+    integrationTestImplementation("com.opentable.components:otj-pg-embedded:0.13.1")
+    integrationTestImplementation("org.junit.platform:junit-platform-engine:1.5.2")
 }
 
 tasks.withType<KotlinCompile> {

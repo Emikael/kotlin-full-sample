@@ -1,9 +1,9 @@
-package io.github.emikaelsilveira.componenttest
+package io.github.emikaelsilveira.tests
 
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
 import io.github.emikaelsilveira.application.config.AppConfig
-import io.github.emikaelsilveira.utils.components.DataBaseComponent
+import io.github.emikaelsilveira.tests.components.DataBaseComponent
 import io.javalin.Javalin
 import org.assertj.core.api.Assertions.assertThat
 import org.eclipse.jetty.http.HttpStatus.BAD_REQUEST_400

@@ -1,6 +1,5 @@
-package io.github.emikaelsilveira.kotlinfullsample.resources.repositories
+package io.github.emikaelsilveira.resources.repositories
 
-import io.github.emikaelsilveira.resources.repositories.AddressRepositoryImpl
 import io.github.emikaelsilveira.utils.builders.AddressDTOBuilder
 import io.github.emikaelsilveira.utils.components.DataBaseComponent
 import org.assertj.core.api.Assertions.assertThat

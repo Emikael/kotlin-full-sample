@@ -1,4 +1,4 @@
-package io.github.emikaelsilveira.kotlinfullsample.resources.consumer
+package io.github.emikaelsilveira.resources.consumer
 
 import com.github.kittinunf.fuel.core.Client
 import com.github.kittinunf.fuel.core.FuelManager

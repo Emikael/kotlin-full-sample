@@ -1,13 +1,13 @@
-package io.github.emikaelsilveira.componenttest
+package io.github.emikaelsilveira.tests
 
 import com.github.kittinunf.fuel.httpDelete
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.fuel.httpPut
 import io.github.emikaelsilveira.application.config.AppConfig
-import io.github.emikaelsilveira.utils.builders.UserDTOBuilder
-import io.github.emikaelsilveira.utils.components.DataBaseComponent
-import io.github.emikaelsilveira.utils.extensions.asJsonToObject
+import io.github.emikaelsilveira.tests.components.DataBaseComponent
+import io.github.emikaelsilveira.tests.extensions.asJsonToObject
+import io.github.emikaelsilveira.tests.builders.UserDTOBuilder
 import io.javalin.Javalin
 import org.assertj.core.api.Assertions.assertThat
 import org.eclipse.jetty.http.HttpStatus.OK_200
@@ -33,6 +33,26 @@ object UserTest : Spek({
         afterEachTest { app.stop() }
 
         afterGroup { DataBaseComponent.close() }
+
+        describe("PUT /users/:id") {
+            it("should return status 200 and update an user") {
+                DataBaseComponent.insertUser(UserDTOBuilder.build { addressDTO = null })
+                val json = "update-user.json".asJsonToObject()
+
+                val response = "$url/users/1".httpPut()
+                    .header("Content-Type", "application/json")
+                    .body(json.toString())
+                    .response().second
+
+                assertThat(OK_200).isEqualTo(response.statusCode)
+                JSONObject(String(response.data)).also {
+                    assertThat(it).isNotNull
+                    assertThat(it["id"]).isNotNull
+                    assertThat(it["address"]).isNotNull
+                    assertThat(it["update_at"]).isNotNull
+                }
+            }
+        }
 
         describe("GET /users") {
             it("should return status 200 and an list of users") {
@@ -93,26 +113,6 @@ object UserTest : Spek({
                 val response = "$url/users/1".httpDelete().response().second
 
                 assertThat(OK_200).isEqualTo(response.statusCode)
-            }
-        }
-
-        describe("PUT /users/:id") {
-            it("should return status 200 and update an user") {
-                DataBaseComponent.insertUser(UserDTOBuilder.build { addressDTO = null })
-                val json = "update-user.json".asJsonToObject()
-
-                val response = "$url/users/1".httpPut()
-                    .header("Content-Type", "application/json")
-                    .body(json.toString())
-                    .response().second
-
-                assertThat(OK_200).isEqualTo(response.statusCode)
-                JSONObject(String(response.data)).also {
-                    assertThat(it).isNotNull
-                    assertThat(it["id"]).isNotNull
-                    assertThat(it["address"]).isNotNull
-                    assertThat(it["update_at"]).isNotNull
-                }
             }
         }
     }

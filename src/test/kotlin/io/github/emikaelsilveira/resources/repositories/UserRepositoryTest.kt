@@ -1,7 +1,6 @@
-package io.github.emikaelsilveira.kotlinfullsample.resources.repositories
+package io.github.emikaelsilveira.resources.repositories
 
 import io.github.emikaelsilveira.domain.entities.UserDTO
-import io.github.emikaelsilveira.resources.repositories.UserRepositoryImpl
 import io.github.emikaelsilveira.utils.builders.UserDTOBuilder
 import io.github.emikaelsilveira.utils.components.DataBaseComponent
 import org.assertj.core.api.Assertions.assertThat
