@@ -14,12 +14,12 @@ buildscript {
 
 plugins {
     application
-    kotlin("jvm") version "1.3.41"
+    kotlin("jvm") version "1.3.50"
     id("com.github.johnrengelman.shadow") version "5.1.0"
     id("org.flywaydb.flyway") version "6.0.3"
 }
 
-group = "io.emikaelsilveira"
+group = "io.github.emikaelsilveira"
 version = "1.0.0"
 
 repositories {
@@ -35,7 +35,7 @@ apply {
 }
 
 application {
-    mainClassName = "io.github.emikaelsilveira.application.KotlinFullSampleApplication"
+    mainClassName = "io.github.emikaelsilveira.application.KotlinFullSampleApplicationkt"
 }
 
 val sourceSets = the<SourceSetContainer>()
@@ -64,7 +64,7 @@ task<Test>("integrationTest") {
     classpath = sourceSets["integrationTest"].runtimeClasspath
     mustRunAfter(tasks["test"])
 
-    useJUnitPlatform() {
+    useJUnitPlatform {
         includeEngines("spek")
     }
 }

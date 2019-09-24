@@ -7,9 +7,7 @@ import io.github.emikaelsilveira.application.config.modules.providerModule
 import io.github.emikaelsilveira.application.config.modules.repositoryModule
 import io.github.emikaelsilveira.application.config.modules.routerModule
 import io.github.emikaelsilveira.application.config.modules.serviceModule
-import io.github.emikaelsilveira.application.web.routers.AddressRouter
 import io.github.emikaelsilveira.application.web.routers.Router
-import io.github.emikaelsilveira.application.web.routers.UserRouter
 import io.github.emikaelsilveira.domain.exceptions.NotFoundException
 import io.javalin.Javalin
 import io.javalin.plugin.json.JavalinJackson
@@ -65,7 +63,6 @@ class AppConfig : KoinComponent {
         }.also { app ->
             app.routes { routers.forEach { it.register() } }
 
-            // FIXME - Create a handler to controller exceptions on application
             app.exception(NotFoundException::class.java) { exception, ctx ->
                 ctx.status(NOT_FOUND_404)
                 exception.message?.let { ctx.result(it) }
