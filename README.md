@@ -27,7 +27,7 @@ $ ./gradlew clean build
 $ cd {project_path}/others/docker
 $ docker-compose up
 ```
-##### Run Flaway
+##### Run Flyway
 ```shell script
 $ ./gradlew flywaymigrate
 ```
