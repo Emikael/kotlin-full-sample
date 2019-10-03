@@ -2,7 +2,7 @@ package io.github.emikaelsilveira.resources.viacep.entities
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.github.emikaelsilveira.domain.entities.AddressConvertable
-import io.github.emikaelsilveira.domain.entities.AddressDTO
+import io.github.emikaelsilveira.domain.entities.Address
 
 data class ViaCepAddress(
     @get:JsonProperty("cep")
@@ -21,7 +21,7 @@ data class ViaCepAddress(
     val ibge: Long
 ) : AddressConvertable {
 
-    override fun toDomain() = AddressDTO(
+    override fun toDomain() = Address(
         id = null,
         cep = this.cep,
         street = this.street,

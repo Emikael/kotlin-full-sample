@@ -1,14 +1,14 @@
 package io.github.emikaelsilveira.domain.repositories
 
-import io.github.emikaelsilveira.domain.entities.AddressDTO
+import io.github.emikaelsilveira.domain.entities.Address
 
 interface AddressRepository {
 
-    fun getByCep(cep: String): AddressDTO?
+    fun getByCep(cep: String): Address?
 
-    fun create(addressDTO: AddressDTO): AddressDTO
+    fun create(address: Address): Address
 
-    fun update(id: Long, addressDTO: AddressDTO): AddressDTO
+    fun update(id: Long, address: Address): Address
 
-    fun getAll(): List<AddressDTO>
+    fun getAll(): List<Address>
 }

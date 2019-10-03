@@ -1,6 +1,6 @@
 package io.github.emikaelsilveira.utils.builders
 
-import io.github.emikaelsilveira.domain.entities.AddressDTO
+import io.github.emikaelsilveira.domain.entities.Address
 import org.joda.time.LocalDateTime
 
 class AddressDTOBuilder {
@@ -16,7 +16,7 @@ class AddressDTOBuilder {
     var createAt: LocalDateTime? = null
     var updateAt: LocalDateTime? = null
 
-    private fun build() = AddressDTO(
+    private fun build() = Address(
         id = id,
         cep = cep,
         street = street,

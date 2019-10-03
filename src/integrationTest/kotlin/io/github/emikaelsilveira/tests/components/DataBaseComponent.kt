@@ -1,8 +1,8 @@
 package io.github.emikaelsilveira.tests.components
 
 import com.opentable.db.postgres.embedded.EmbeddedPostgres
-import io.github.emikaelsilveira.domain.entities.AddressDTO
-import io.github.emikaelsilveira.domain.entities.UserDTO
+import io.github.emikaelsilveira.domain.entities.Address
+import io.github.emikaelsilveira.domain.entities.User
 import io.github.emikaelsilveira.resources.extensions.dtoToSchema
 import io.github.emikaelsilveira.resources.repositories.schemas.AddressSchema
 import io.github.emikaelsilveira.resources.repositories.schemas.UserSchema
@@ -46,7 +46,7 @@ object DataBaseComponent {
         migrate()
     }
 
-    fun insertUser(user: UserDTO = UserDTOBuilder.build()) {
+    fun insertUser(user: User = UserDTOBuilder.build()) {
         transaction {
             UserSchema.insert {
                 dtoToSchema(it, user)
@@ -55,7 +55,7 @@ object DataBaseComponent {
         }
     }
 
-    fun insertAddress(address: AddressDTO = AddressDTOBuilder.build()) {
+    fun insertAddress(address: Address = AddressDTOBuilder.build()) {
         transaction {
             AddressSchema.insert {
                 dtoToSchema(it, address)

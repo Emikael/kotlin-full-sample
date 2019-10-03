@@ -1,13 +1,13 @@
 package io.github.emikaelsilveira.domain.services
 
-import io.github.emikaelsilveira.domain.entities.AddressDTO
+import io.github.emikaelsilveira.domain.entities.Address
 
 interface AddressService {
 
-    fun getByCep(cep: String): AddressDTO
+    fun getByCep(cep: String): Address
 
-    fun createOrUpdate(addressDTO: AddressDTO): AddressDTO
+    fun createOrUpdate(address: Address): Address
 
-    fun getAll(): List<AddressDTO>
+    fun getAll(): List<Address>
 
 }

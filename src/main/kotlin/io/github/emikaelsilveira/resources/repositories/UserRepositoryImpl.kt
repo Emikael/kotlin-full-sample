@@ -1,6 +1,6 @@
 package io.github.emikaelsilveira.resources.repositories
 
-import io.github.emikaelsilveira.domain.entities.UserDTO
+import io.github.emikaelsilveira.domain.entities.User
 import io.github.emikaelsilveira.domain.exceptions.NotFoundException
 import io.github.emikaelsilveira.domain.repositories.UserRepository
 import io.github.emikaelsilveira.resources.extensions.dtoToSchema
@@ -35,17 +35,17 @@ class UserRepositoryImpl(dataSource: DataSource) : UserRepository {
             ?: throw NotFoundException(id.toString())
     }
 
-    override fun create(userDTO: UserDTO) = transaction {
+    override fun create(user: User) = transaction {
         val userId = UserSchema.insert {
-            dtoToSchema(it, userDTO)
+            dtoToSchema(it, user)
             it[createdAt] = LocalDateTime.now().toDateTime()
         } get UserSchema.id
         (UserSchema leftJoin AddressSchema).select { UserSchema.id eq userId }.map { it.toUserDomain() }.first()
     }
 
-    override fun update(id: Long, userDTO: UserDTO) = transaction {
+    override fun update(id: Long, user: User) = transaction {
         UserSchema.update({ UserSchema.id eq id }) {
-            dtoToSchema(it, userDTO)
+            dtoToSchema(it, user)
             it[updatedAt] = LocalDateTime.now().toDateTime()
         }.let {
             (UserSchema leftJoin AddressSchema).select { UserSchema.id eq id }.map { it.toUserDomain() }.first()

@@ -1,6 +1,6 @@
 package io.github.emikaelsilveira.application.web.controllers
 
-import io.github.emikaelsilveira.domain.entities.UserDTO
+import io.github.emikaelsilveira.domain.entities.User
 import io.github.emikaelsilveira.domain.services.UserService
 import io.github.emikaelsilveira.resources.extensions.paramAsLong
 import io.javalin.http.Context
@@ -15,11 +15,11 @@ class UserController(private val service: UserService) {
 
     fun getOne(context: Context) = this.service.getOne(context.paramAsLong(USER_ID))
 
-    fun create(context: Context) = this.service.create(context.bodyAsClass(UserDTO::class.java))
+    fun create(context: Context) = this.service.create(context.bodyAsClass(User::class.java))
 
-    fun update(context: Context): UserDTO {
+    fun update(context: Context): User {
         val id = context.paramAsLong(USER_ID)
-        val user = context.bodyAsClass(UserDTO::class.java)
+        val user = context.bodyAsClass(User::class.java)
         return this.service.update(id, user)
     }
 

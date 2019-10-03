@@ -36,7 +36,7 @@ object UserTest : Spek({
 
         describe("PUT /users/:id") {
             it("should return status 200 and update an user") {
-                DataBaseComponent.insertUser(UserDTOBuilder.build { addressDTO = null })
+                DataBaseComponent.insertUser(UserDTOBuilder.build { address = null })
                 val json = "update-user.json".asJsonToObject()
 
                 val response = "$url/users/1".httpPut()
@@ -56,7 +56,7 @@ object UserTest : Spek({
 
         describe("GET /users") {
             it("should return status 200 and an list of users") {
-                DataBaseComponent.insertUser(UserDTOBuilder.build { addressDTO = null })
+                DataBaseComponent.insertUser(UserDTOBuilder.build { address = null })
 
                 val response = "$url/users".httpGet().response().second
 
@@ -94,7 +94,7 @@ object UserTest : Spek({
 
         describe("GET /users/:id") {
             it("should return status 200 an a User with id 1") {
-                DataBaseComponent.insertUser(UserDTOBuilder.build { addressDTO = null })
+                DataBaseComponent.insertUser(UserDTOBuilder.build { address = null })
 
                 val response = "$url/users/1".httpGet().response().second
 
@@ -108,7 +108,7 @@ object UserTest : Spek({
 
         describe("DELETE /users/:id") {
             it("should return status 200 and delete an user") {
-                DataBaseComponent.insertUser(UserDTOBuilder.build { addressDTO = null })
+                DataBaseComponent.insertUser(UserDTOBuilder.build { address = null })
 
                 val response = "$url/users/1".httpDelete().response().second
 

@@ -1,6 +1,6 @@
 package io.github.emikaelsilveira.resources.repositories
 
-import io.github.emikaelsilveira.domain.entities.AddressDTO
+import io.github.emikaelsilveira.domain.entities.Address
 import io.github.emikaelsilveira.domain.repositories.AddressRepository
 import io.github.emikaelsilveira.resources.extensions.dtoToSchema
 import io.github.emikaelsilveira.resources.extensions.toAddressDomain
@@ -27,17 +27,17 @@ class AddressRepositoryImpl(dataSource: DataSource) : AddressRepository {
         AddressSchema.select { AddressSchema.cep eq cep }.map { it.toAddressDomain() }.firstOrNull()
     }
 
-    override fun create(addressDTO: AddressDTO) = transaction {
+    override fun create(address: Address) = transaction {
         val addressId = AddressSchema.insert {
-            dtoToSchema(it, addressDTO)
+            dtoToSchema(it, address)
             it[createdAt] = LocalDateTime.now().toDateTime()
         } get AddressSchema.id
         AddressSchema.select { AddressSchema.id eq addressId }.map { it.toAddressDomain() }.first()
     }
 
-    override fun update(id: Long, addressDTO: AddressDTO) = transaction {
+    override fun update(id: Long, address: Address) = transaction {
         AddressSchema.update({ AddressSchema.id eq id }) {
-            dtoToSchema(it, addressDTO)
+            dtoToSchema(it, address)
             it[updatedAt] = LocalDateTime.now().toDateTime()
         }.let {
             AddressSchema.select { AddressSchema.id eq id }.map { it.toAddressDomain() }.first()

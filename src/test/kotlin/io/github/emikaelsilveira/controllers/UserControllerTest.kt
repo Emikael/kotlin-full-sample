@@ -2,7 +2,7 @@ package io.github.emikaelsilveira.controllers
 
 import io.github.emikaelsilveira.application.web.controllers.UserController
 import io.github.emikaelsilveira.utils.builders.UserDTOBuilder
-import io.github.emikaelsilveira.domain.entities.UserDTO
+import io.github.emikaelsilveira.domain.entities.User
 import io.github.emikaelsilveira.domain.services.UserService
 import io.javalin.http.Context
 import io.mockk.confirmVerified
@@ -60,7 +60,7 @@ object UserControllerTest : Spek({
 
         describe("POST /users") {
             it("should create a new user") {
-                every { contextMock.bodyAsClass(UserDTO::class.java) } returns user
+                every { contextMock.bodyAsClass(User::class.java) } returns user
                 every { serviceMock.create(user) } returns otherUser
 
                 val result = controller.create(contextMock)
@@ -68,7 +68,7 @@ object UserControllerTest : Spek({
                 assertThat(result).isNotNull
                 assertThat(result).isEqualTo(otherUser)
                 verify {
-                    contextMock.bodyAsClass(UserDTO::class.java)
+                    contextMock.bodyAsClass(User::class.java)
                     serviceMock.create(user)
                 }
             }
@@ -77,7 +77,7 @@ object UserControllerTest : Spek({
         describe("PUT /users/:id") {
             it("should update a user") {
                 every { contextMock.pathParam(userId) } returns uuId
-                every { contextMock.bodyAsClass(UserDTO::class.java) } returns user
+                every { contextMock.bodyAsClass(User::class.java) } returns user
                 every { serviceMock.update(uuId.toLong(), user) } returns otherUser
 
                 val result = controller.update(contextMock)
@@ -86,7 +86,7 @@ object UserControllerTest : Spek({
                 assertThat(result).isEqualTo(otherUser)
                 verify {
                     contextMock.pathParam(userId)
-                    contextMock.bodyAsClass(UserDTO::class.java)
+                    contextMock.bodyAsClass(User::class.java)
                     serviceMock.update(uuId.toLong(), user)
                 }
             }

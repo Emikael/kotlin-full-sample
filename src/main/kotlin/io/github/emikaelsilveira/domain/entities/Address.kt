@@ -2,7 +2,7 @@ package io.github.emikaelsilveira.domain.entities
 
 import org.joda.time.LocalDateTime
 
-data class AddressDTO(
+data class Address(
     val id: Long?,
     val cep: String,
     val street: String?,

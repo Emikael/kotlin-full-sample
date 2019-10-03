@@ -1,6 +1,6 @@
 package io.github.emikaelsilveira.resources.repositories
 
-import io.github.emikaelsilveira.domain.entities.UserDTO
+import io.github.emikaelsilveira.domain.entities.User
 import io.github.emikaelsilveira.utils.builders.UserDTOBuilder
 import io.github.emikaelsilveira.utils.components.DataBaseComponent
 import org.assertj.core.api.Assertions.assertThat
@@ -11,7 +11,7 @@ import org.jetbrains.spek.api.dsl.it
 object UserRepositoryTest : Spek({
 
     lateinit var repository: UserRepositoryImpl
-    lateinit var user: UserDTO
+    lateinit var user: User
     val otherUser = UserDTOBuilder.build()
 
     describe("#UserRepository") {

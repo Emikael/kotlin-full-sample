@@ -1,16 +1,16 @@
 package io.github.emikaelsilveira.domain.services
 
-import io.github.emikaelsilveira.domain.entities.UserDTO
+import io.github.emikaelsilveira.domain.entities.User
 
 interface UserService {
 
-    fun getAll(): List<UserDTO>
+    fun getAll(): List<User>
 
-    fun getOne(id: Long): UserDTO
+    fun getOne(id: Long): User
 
-    fun create(userDTO: UserDTO): UserDTO
+    fun create(user: User): User
 
-    fun update(id: Long, userDTO: UserDTO): UserDTO
+    fun update(id: Long, user: User): User
 
     fun delete(id: Long)
 }

@@ -1,6 +1,6 @@
 package io.github.emikaelsilveira.domain.services.implementations
 
-import io.github.emikaelsilveira.domain.entities.UserDTO
+import io.github.emikaelsilveira.domain.entities.User
 import io.github.emikaelsilveira.domain.repositories.UserRepository
 import io.github.emikaelsilveira.domain.services.AddressService
 import io.github.emikaelsilveira.domain.services.UserService
@@ -14,22 +14,22 @@ class UserServiceImpl(
 
     override fun getOne(id: Long) = repository.getOne(id)
 
-    override fun create(userDTO: UserDTO): UserDTO {
-        val user = getUserWithAddress(userDTO)
+    override fun create(userParameter: User): User {
+        val user = getUserWithAddress(userParameter)
         return repository.create(user)
     }
 
-    override fun update(id: Long, userDTO: UserDTO): UserDTO {
-        val user = getUserWithAddress(userDTO)
+    override fun update(id: Long, userParameter: User): User {
+        val user = getUserWithAddress(userParameter)
         return repository.update(id, user)
     }
 
     override fun delete(id: Long) = repository.delete(id)
 
-    private fun getUserWithAddress(userDTO: UserDTO): UserDTO {
-        val address = userDTO.addressDTO?.cep
+    private fun getUserWithAddress(user: User): User {
+        val address = user.address?.cep
             ?.let { addressService.getByCep(it) }
             ?.let { addressService.createOrUpdate(it) }
-        return userDTO.copy(addressDTO = address)
+        return user.copy(address = address)
     }
 }
